@@ -1,23 +1,23 @@
-import sys 
-
-def solve():
-    data = sys.stdin.read().split()
-    n = int(data[0])
-    list_a = [int(data[i]) for i in range(1, n+1)]
-
-    # 前n项和
-    profix_sum = [0] * (n+1)
-    for i in range(1, n+1):
-        profix_sum[i] = profix_sum[i-1] + list_a[i-1]
-
-    m = int(data[n+1])
-    idx = n+2
-    for _ in range(m):
-        l = int(data[idx])
-        r = int(data[idx+1])
-        idx += 2
-        print(profix_sum[r]-profix_sum[l-1])
-
+def generate_tuples():
+    n, k = map(int, input().split())
+    
+    # 用于存储当前生成的元组
+    current_tuple = []
+    
+    def dfs(depth):
+        if depth == n:
+            print(" ".join(map(str, current_tuple)))
+            return
+        
+        # 核心逻辑：从 1 到 k 依次尝试填入当前位置
+        # 因为是从 1 开始遍历到 k，自然保证了输出的字典序
+        for i in range(1, k + 1):
+            current_tuple.append(i)  # 做出选择
+            dfs(depth + 1)           # 递归进入下一层
+            current_tuple.pop()      # 回溯，撤销选择
+            
+    # 从第 0 层（第一个位置）开始搜索
+    dfs(0)
 
 if __name__ == "__main__":
-    solve()
+    generate_tuples()
