@@ -1,17 +1,25 @@
-
 def solve():
     n = int(input())
     x = int(input())
     
-    # 十进制整数 n 转 x 进制；给定一个十进制整数 n 和一个小整数 x。将整数 n 转为 x 进制。对于超过十进制的数码，用 A，B ... 表示。
     if n == 0:
         return "0"
-    x_str = ""
+    
+    # 建立 0-35 对应的字符表
+    chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    x_str = []
+    
     while n > 0:
-        x_str += str(n % x)
+        # 1. 求余数
+        rem = n % x
+        # 2. 根据余数查表，获取对应的字符，并加入列表中
+        x_str.append(chars[rem])
+        # 3. 整除
         n //= x
-    return x_str[::-1]
+        
+    # 翻转并拼接成最终的字符串
+    return "".join(reversed(x_str))
 
 
 if __name__ == "__main__":
-    solve()
+    print(solve())
